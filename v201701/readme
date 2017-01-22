@@ -1,0 +1,52 @@
++# [MonBlog]
++
++source :  this application has been designed based on [Evoluer vers une architecture MVC en PHP] (http://bpesquet.developpez.com/tutoriels/php/evoluer-architecture-mvc/)
++		   footer has been developped based on https://www.script-tutorials.com/stylish-responsive-footer/
++		   design is based on bootstrap (https://getbootstrap.com/getting-started/, http://www.w3schools.com/bootstrap/default.asp)
++Author : [jpguilleron@hotmail.com]
++
++## Version
++	2016-14  2016 dec 31 Form validator generalization
++	2016-13  2016 dec 7  Change thema/style to cope with bootstrap features and naming. use bootstrap design instead of custom design.
++	2016-12  2016 dec 1  new TODO application, review Login, Blog, Chat, About, Slider application, add a test application with its own style
++	2016-11  2016 nov 13 new SHOP application, standardization of mvc class
++
++## Description
++
++* MVC architure framework
++* Blog application version 0.1.0
++* Chat application version 0.1.0
++* Login application version 0.1.0
++* Shop application version 0.1.0
++* Todo application version 0.1.0
++* Contact application version 0.0.1
+
++## Configuration setup
++
++modify dev.ini to cope with the actual configuration - create a prod.ini for production (prod.ini override dev.ini)
++ config file *.ini:
+[Configuration]
+site.application.version = v2016-13			// VERSION to be updated for each version
+site.application.name = netricite			// Application name to be updated for each project
+site.application.index = root       		// default page launched 
+
+[Debug]
+debug = true						; production change debug to false
+debug.trace = true					; production change debug to false
+debug.framework = true				; production change debug to false
+
++## Eclipse project clone
++
++* 1. From explorer nor eclipse DO NOT duplicate project 
++* 2. From eclipse open a new project in the root directory  d:wamp/www/netricite/
++* 3. Import a previous version in the new created project
++* 4. change config setup as describe above
+
++## New function
++
++* 1. From eclipse create new folders in controler, model, view folders with the name of the function
++* 2. From eclipse create one PHP file per folder with the name of the application in every new folder (cApplication, mApplication, vApplication) based on cGenerator, mGenerator, vGenerator 
++* 3. add new menu item in vMenu
++* 4. if login is required cGenerator extends fw\fwControlerFilter
+
+

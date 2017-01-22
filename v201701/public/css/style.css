@@ -1,0 +1,507 @@
+@CHARSET "UTF-8";
+
+/*
+smacss method
+5 categories :
+
+    Base
+    Layout
+    Module
+    State
+    Theme
+    
+
+
+*/
+
+/* notes :
+	Pour pouvoir utiliser une hauteur (height) ou une hauteur minimale
+   (min-height) sur un bloc, il faut que son parent direct ait lui-même une
+   hauteur déterminée (donc toute valeur de height sauf "auto": hauteur en
+   pixels, em, autres unités...).
+   Si la hauteur du parent est en pourcentage, elle se réfère alors à la
+   hauteur du «grand-père», et ainsi de suite.
+   Pour pouvoir utiliser un "min-height: 100%" sur div#page, il nous faut:
+   - un parent (body) en "height: 100%";
+   - le parent de body également en "height: 100%". */
+
+*/
+
+/* structure des propriétés dans un sélecteur (séparer les groupes de propriétés par une ligne blanche) :
+	box
+	border
+	background
+	text
+	other
+
+*/
+
+/* BEM notation */
+/*	.block {}				A Block represents an object in your website. 
+	.block__element {}		An Element is a component within the block that performs a particular function. It should only make sense in the context of its block.
+	.block--modifier {}		A Modifier is how we represent the variations of a block
+	.block__element--modifier {}
+	example:
+	.menu {}
+	.menu__item {}
+	.menu__item--featured {}
+	.menu--footer {}
+*/
+   
+   
+/* smacss BASE   */
+/* ============= */
+/* Il s’agit des éléments par défaut tels qu’ils sont définis sur l’ensemble du site.  */
+
+/* Cette catégorie ne doit contenir ni classe, ni identifiant !
+Vous ne devez pas utiliser !important dans cette catégorie. */
+
+html, body {
+    height: 100%;
+}
+/* Disable the ability to resize textareas */
+textarea {
+    resize: none;
+}
+
+  body {
+      font: 400 15px Lato, sans-serif;
+      line-height: 1.8;
+      color: #818181;
+  }
+  h2 {
+      font-size: 24px;
+      text-transform: uppercase;
+      color: #303030;
+      font-weight: 600;
+      margin-bottom: 30px;
+  }
+  h3 {
+    margin: 10px 0 30px 0;
+    letter-spacing: 10px;
+    font-size: 20px;
+    color: #111;
+  }
+  h4 {
+      font-size: 19px;
+      line-height: 1.375em;
+      color: #303030;
+      font-weight: 400;
+      margin-bottom: 30px;
+  }  
+
+footer {
+ 	color: #61380B ;
+    background-color:   #ecd9c6;
+    padding: 32px;
+}
+
+footer a {
+    color: #ecd9c6;
+}
+
+footer a:hover {
+    color: #777;
+    text-decoration: none;
+}
+  footer .glyphicon {
+      font-size: 20px;
+      margin-bottom: 20px;
+      color: #61380B;
+  }
+  
+
+ /* Style the buttons that are used to open and close the accordion panel */
+button.accordion {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    transition: 0.4s;
+}
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+button.accordion.active, button.accordion:hover {
+    background-color: #ddd;
+}
+
+/* Style the accordion panel. Note: hidden by default */
+div.panel {
+    padding: 0 18px;
+    background-color: white;
+    display: none;
+}
+
+/* The "show" class is added to the accordion panel when the user clicks on one of the buttons. This will show the panel content */
+div.panel.show {
+    display: block;
+}
+/* smacss LAYOUT */
+/* ============= */
+/* Il s’agit du découpage de l’architecture de votre site en sections principales. */
+/* Vous ne devez pas utiliser !important dans cette catégorie. */
+
+.bg-grey {
+      background-color: #f6f6f6;
+  }
+
+  @keyframes slide {
+    0% {
+      opacity: 0;
+      transform: translateY(70%);
+    } 
+    100% {
+      opacity: 1;
+      transform: translateY(0%);
+    }
+  }
+  @-webkit-keyframes slide {
+    0% {
+      opacity: 0;
+      -webkit-transform: translateY(70%);
+    } 
+    100% {
+      opacity: 1;
+      -webkit-transform: translateY(0%);
+    }
+  }
+  @media screen and (max-width: 768px) {
+    .col-sm-4 {
+      text-align: center;
+      margin: 25px 0;
+    }
+    .btn-lg {
+        width: 100%;
+        margin-bottom: 35px;
+    }
+  }
+  @media screen and (max-width: 480px) {
+    .logo {
+        font-size: 150px;
+    }
+  }
+
+/* smacss MODULE */
+/* ============= */
+/* Un module est une section mineure, un composant autonome de la page. */
+/* Un module doit être un bloc autonome et la structure des sélecteurs doit refléter cela. 
+Si vous commencez à ajouter un contexte spécifique dans votre CSS pour styliser votre module “en fonction de là où il se trouve”, 
+vous passez à côté de la plaque ! */
+
+/* Vous ne devez pas utiliser !important dans cette catégorie. */
+
+ .jumbotron {
+      background-color: #ecd9c6;
+      color: #61380B;
+      padding: 60px 5px;
+      font-family: Montserrat, sans-serif;
+  }
+  .container-fluid {
+      padding: 60px 50px;
+  }
+  
+  /* IMG style */
+  .img-logo-small {
+      color: #61380B;
+      font-size: 50px;
+  }
+  .img-logo {
+      color: #61380B;
+      font-size: 200px;
+      width:35px;
+      height:35px;
+  }
+.img-xs {
+	width:50px;
+	height:35px
+}
+.img-social {
+	width:150px;
+	height:50px
+}
+.img-user {
+	width:25px;
+	height:25px
+}
+.img-small {
+	width:304px;
+	height:228px;
+}
+.img-small-large {
+	width:300px;
+	height:330px;
+}
+.img-medium {
+	width:500px;
+	height:400px;
+}
+.img-large {
+	width:800px;
+	height:600px;
+}
+  .thumbnail {
+      padding: 0 0 15px 0;
+      border: none;
+      border-radius: 0;
+  }
+  .thumbnail img {
+      width: 100%;
+      height: 100%;
+      margin-bottom: 10px;
+  }
+  .carousel-control.right, .carousel-control.left {
+      background-image: none;
+      color: #61380B;
+  }
+  .carousel-indicators li {
+      border-color: #ecd9c6;
+  }
+  .carousel-indicators li.active {
+      background-color: #ecd9c6;
+  }
+  
+  .carousel-inner > .item > img,
+  .carousel-inner > .item > a > img  {
+      width: 70%;
+      height:420px;
+      margin-left: 100px;
+		
+  }
+  
+ .carousel-caption > a,  
+ .carousel-caption > p {
+     
+      font-size: 20px;
+      color: white ! important; 
+  }
+  
+ .thumbnail > a > img  ,   
+ .icon-kart img {
+      width: 30px;
+      height:30px;
+  }
+
+  .item h4 {
+      font-size: 19px;
+      line-height: 1.375em;
+      font-weight: 400;
+      font-style: italic;
+      margin: 70px 0;
+  }
+  .item span {
+      font-style: normal;
+  }
+  .panel {
+      border: 1px solid #ecd9c6; 
+      border-radius:0 !important;
+      transition: box-shadow 0.5s;
+  }
+  .panel:hover {
+      box-shadow: 5px 0px 40px rgba(0,0,0, .2);
+  }
+  .panel-footer .btn:hover {
+      border: 1px solid #f4511e;
+      background-color: #61380B !important;
+      color: #ecd9c6;
+  }
+
+  .panel-heading {
+      color: #61380B !important;
+      background-color: #ecd9c6 !important;
+      padding: 25px;
+      border-bottom: 1px solid transparent;
+      border-top-left-radius: 0px;
+      border-top-right-radius: 0px;
+      border-bottom-left-radius: 0px;
+      border-bottom-right-radius: 0px;
+  }
+  .panel-footer {
+      background-color: #f2e6d9 !important;
+      /* background-color: #ecd9c6 !important; */
+      color: black !important;
+  }
+  .panel-footer h3 {
+      font-size: 32px;
+  }
+  .panel-footer h4 {
+      color: #aaa;
+      font-size: 14px;
+  }
+  .panel-footer .btn {
+      margin: 15px 0;
+      background-color: #ecd9c6;
+      color: #61380B;
+  }
+  .navbar {
+      margin-bottom: 0;
+      background-color: #ecd9c6;
+      z-index: 9999;
+      border: 0;
+      font-size: 12px !important;
+      line-height: 1.42857143 !important;
+      letter-spacing: 4px;
+      border-radius: 0;
+      font-family: Montserrat, sans-serif;
+  }
+  .navbar li a, .navbar .navbar-brand {
+      color: #61380B !important;
+  }
+  .navbar-nav li a:hover {
+      color: #ecd9c6 !important;					
+      background-color: #61380B !important;
+  }
+  .navbar-nav li.active a {
+      color: blue !important;						/* #ecd9c6 */
+      background-color: #ecd9c6 !important;
+  }
+  .navbar-default .navbar-toggle {
+      border-color: transparent;
+      color: #61380B !important;
+  }
+  
+  .nav-tabs li a {
+    color: #777;
+  }
+  
+  .slideanim {visibility:hidden;}
+  .slide {
+      animation-name: slide;
+      -webkit-animation-name: slide;
+      animation-duration: 1s;
+      -webkit-animation-duration: 1s;
+      visibility: visible;
+  }
+/* Add a dark gray background color to the modal header and center text */
+.modal-header, h4, .close {
+    background-color: #333;
+    color: #fff !important;
+    text-align: center;
+    font-size: 30px;
+}
+
+.modal-header, .modal-body {
+    padding: 40px 50px;
+}
+#googleMap {
+      width: auto;
+      height: 600px;
+  }  
+
+/* APPLICATION SPECIFIC */
+/* ==================== */
+
+/* IMAGE HOVER EFFECT - background  - working with prefixfree.min.js */
+/* COMMON CLASSES */
+.img-cf:before, .img-cf:after { content: " "; display: table; }
+.img-cf:after { clear: both; }
+.img-cf { *zoom: 1; }
+
+/* CONTENT */
+#img-content {margin:40px auto;}
+#img-content img {border: 5px solid #777; box-shadow: 3px 3px 5px #777; padding:30px;}
+
+/* PROFILES */
+.img-profiles, .img-info { list-style:none; cursor:pointer; }
+.img-profiles > li { width:150px; height:200px; float:left; margin-right:50px; }
+
+.img-info, .img-pic { position:absolute; }
+.img-info { font-family: 'Lato', sans-serif; color:#a48f6f; font-size:18px; padding:5px; background-color:rgba(235, 224, 208, 0.8); width:140px; height:190px; opacity:0; text-align:right; }
+.img-info a { font-weight:bold; font-size:25px; color:#a48f6f; text-decoration:none; }
+.img-info a:hover { text-decoration:underline; }
+
+.img-pic { width:200px; height:200px;}
+
+/* PUSH */
+#push .img-info { transition: all 0.3s; transition-delay:0.2s; }
+#push .img-pic { transition: all 0.5s; }
+#push li:hover .img-info { opacity:1; }
+#push li:hover .img-pic { opacity:0.7; transform: scale(0.7) rotate(10deg); }
+
+/* CHAT application *************************/
+.chat #chatMessage {
+	margin-top: 0px;
+	overflow-y: scroll;
+	
+    height: 300px;
+}
+
+.chat__from {
+  position: relative;
+  width: 65%;
+  height: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+
+  border-radius: 3rem;
+  
+  background: #ebe0d0;
+    
+  color: black;
+  font-size: 12px;
+ 
+  cursor: pointer;
+  overflow: hidden;
+  -webkit-transition: width 0.3s 0.15s, font-size 0.1s 0.15s;
+  transition: width 0.3s 0.15s, font-size 0.1s 0.15s;
+}
+
+.chat__to {
+  left: 30%;
+	
+  background: rgba(0,255,255, 0.2);;
+}
+
+/* SORTABLE ******************/
+.sortable { 
+	width: 200px; 
+}
+#sortable { 
+	list-style: none; 
+}
+
+#sortable li { 
+	list-style: none; 
+}
+
+/*Partial URLs are interpreted relative to the source of the style sheet, not relative to the document */
+#sortable li span.sortable {
+	margin:15px;
+	cursor: move;
+}
+
+#sortable__index { 
+	list-style: none; 
+	text-align: left; 
+	margin-left:-30px;
+}
+#sortable__index li { 
+	border: 1px solid #999999;
+	border-radius: 5px;
+}
+
+/*Partial URLs are interpreted relative to the source of the style sheet, not relative to the document */
+#sortable__index li span.sortable__index {
+	height:25px;
+	cursor: move;
+}
+
+/* smacss STATE */
+/* ============= */
+/* Il s’agit de classes qui viennent définir un état particulier dans lequel se trouvent vos éléments. */
+/* Bien souvent, les états correspondent à des interactions avec l’utilisateur et ont des dépendances avec Javascript. */
+
+/* C’est la seule catégorie où l’usage de !important peut être toléré, voire recommandé. */
+
+
+/* smacss THEME */
+/* ============= */
+
+
+/* maintenance */
+/* =========== */
+/* Ce point ne fait pas véritablement partie de SMACSS */
+/* a utiliser pour apporter un correctif rapide, et permettre d'isoler les corrections avant qu'elles ne soient intégrer correctement */
