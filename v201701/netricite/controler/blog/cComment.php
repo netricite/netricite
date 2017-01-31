@@ -23,7 +23,7 @@ class cComment extends fw\fwControlerSession {
    * constructor
    */
   public function __construct() {
-  	appTrace(debug_backtrace());
+  	parent::__construct();
 	
     $this->blog = new blog\mBlog();
     $this->post = new blog\mPost();
@@ -38,9 +38,10 @@ class cComment extends fw\fwControlerSession {
    * @see \Netricite\Framework\fwControler::index()
    */
   public function index() {
-  	appTrace(debug_backtrace());
+  	//appTrace(debug_backtrace());
+    $this->logger->addDebug("index", debug_backtrace());
   	if (!empty($this->request->getParameter("postid"))) {
-  	    $this->generateView(getAppData());
+  	    $this->generateView($this->getAppData());
   	} else {
   	    $this->redirect("blog","blog");
   	}
@@ -69,7 +70,8 @@ class cComment extends fw\fwControlerSession {
    * @see \Netricite\Framework\fwControler::save()
    */
   public function save() {
-      appTrace(debug_backtrace(), $this->request->parameters);
+      //appTrace(debug_backtrace(), $this->request->parameters);
+      $this->logger->addDebug(json_encode($this->request->parameters), debug_backtrace());
       $rc = parent::saveData($_POST['data']);
       $this->redirect("blog","comment", "postid=" . $_POST['data']['postid']  );                                          //refresh page
      

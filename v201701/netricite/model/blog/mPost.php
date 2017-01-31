@@ -16,7 +16,7 @@ use Netricite\Framework as fw;
       */
      public function __construct()
      {
-         appTrace(debug_backtrace());
+         parent::__construct();
          $this->table = "blogpost";
      }
      

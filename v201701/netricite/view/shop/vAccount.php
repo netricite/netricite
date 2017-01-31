@@ -108,7 +108,7 @@ use Netricite\Framework as fw;
         		<p>Vous pouvez visualiser toutes vos commandes et obtenir une facture pour chaque commandes.</p>
             	
         	</aside>
-                <p><a href='index.php?application=shop&class=order' target='_blank' class='pull-left'>Visualiser vos commandes</a></p>
+                <p><a class="pull-right" href='index.php?application=shop&class=order' target='_blank' class='pull-left'>Visualiser vos commandes</a></p>
                 
 		</article>	<!-- end section4 -->
         	

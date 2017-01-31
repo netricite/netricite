@@ -18,7 +18,7 @@ const EXTENSION = ".ini";
 define ("DEV" , $rootpath . "dev" . EXTENSION);
 define ("PROD" , $rootpath . "prod" . EXTENSION);
 
-require $rootpath."netricite/framework/fwIndex.php";
+require $rootpath."netricite/framework/fwBootstrap.php";
 
 $session = new fw\fwSession();                          //session starts
 

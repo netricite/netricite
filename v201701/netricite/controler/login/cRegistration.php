@@ -50,7 +50,7 @@ class cRegistration extends fw\fwControlerSession{
      * constructor
      */
     public function __construct(){
-		appTrace(debug_backtrace());								
+        parent::__construct();							
         $this->model = new login\mUser();
     }
 
@@ -75,14 +75,16 @@ class cRegistration extends fw\fwControlerSession{
      */
     //const SITE_VERIFY_URL = 'https://www.google.com/recaptcha/api/siteverify';
     public function registration(){
-        appTrace(debug_backtrace());
+        //appTrace(debug_backtrace());
+        $this->logger->addDebug('registration' , debug_backtrace());
         if(isset($_POST["g-recaptcha-response"])) {
 
             $data = array ('secret' => $GLOBALS['google.secretkey.recaptcha'], 
                             'response' => $_POST["g-recaptcha-response"],
                             'remoteip'=>$_SERVER['REMOTE_ADDR']
             );
-            appWatch($data,"g-recaptcha-verify",get_class($this));
+            //appWatch($data,"g-recaptcha-verify",get_class($this));
+            $this->logger->addInfo('g-recaptcha-verify' , $data);
             $data = http_build_query($data);            //return http_build_query($data, '', '&');
             
             $context_options = array (
@@ -93,7 +95,8 @@ class cRegistration extends fw\fwControlerSession{
                     'content' => $data
                 )
             );
-            appWatch($data,"g-recaptcha-request",get_class($this));
+            //appWatch($data,"g-recaptcha-request",get_class($this));
+            $this->logger->addInfo('g-recaptcha-request' , $data);
             $context = stream_context_create($context_options);
             $response=json_decode( file_get_contents(fw\fwConfiguration::get('google.recaptcha.verify'), false, $context), true );
             
@@ -101,7 +104,8 @@ class cRegistration extends fw\fwControlerSession{
             //$response=json_decode(file_get_contents(
             //    "https://www.google.com/recaptcha/api/siteverify?secret=".$GLOBALS['google.secretkey.recaptcha']."&response=".$captcha."&remoteip=".$_SERVER['REMOTE_ADDR']
             //    ),TRUE);       
-            appTrace(debug_backtrace(),$response);
+            //appTrace(debug_backtrace(),$response);
+            $this->logger->addInfo('g-recaptcha-response' , $response);
             if( !empty($response)  && $response["success"] ) {
                 //processing registration
                 unset($_POST['data']['passwordConfirm']);                   //not saved
@@ -139,8 +143,9 @@ class cRegistration extends fw\fwControlerSession{
        */
       public function confirm(){
           try {
-              appTrace(debug_backtrace(), $this->request->parameters);
-
+              //appTrace(debug_backtrace(), $this->request->parameters);
+              $this->logger->addDebug(json_encode($this->request->parameters) , debug_backtrace());
+                
               if (empty($this->request->parameters)) throw new \Exception(get_class($this) . " invalid callback token" );
               $conditions="token='" .$this->request->getParameter('token'). "' AND tokenExpiry > NOW() AND status=0";      
               if (empty($this->get(array("conditions"=>$conditions)))) throw new \Exception(get_class($this) ." unable to get valid token");
@@ -151,7 +156,8 @@ class cRegistration extends fw\fwControlerSession{
               info("I", "registration confirmed");
               $this->redirect("root", "root");
           } catch (\Exception $e) {
-              appWatch($this->request->parameters, "confirm(url.paramaters)" . $e->getMessage(),get_class($this));
+              //appWatch($this->request->parameters, "confirm(url.paramaters)" . $e->getMessage(),get_class($this));
+              $this->logger->addError(json_encode($this->request->parameters) , $e->getMessage());
               info("F", "invalid token, operation aborted please reset");  //error message
               redirectError();
           }
@@ -171,7 +177,8 @@ class cRegistration extends fw\fwControlerSession{
        */
       public function setActive($record){
           try {
-              appTrace(debug_backtrace(), $record);
+              //appTrace(debug_backtrace(), $record);
+              $this->logger->addDebug(json_encode($record) , debug_backtrace());
               
               if (empty($record)) throw new \Exception(get_class($this) . " unable to change status" );
               
@@ -197,8 +204,10 @@ class cRegistration extends fw\fwControlerSession{
               $fromEmail = 'noreply@'.$_SERVER['SERVER_NAME'];
               sendmail($message,$email, $subject, $fromEmail);
               info("I", "new account activated");
+              $this->logger->addInfo("new account activated: " . $email);
           } catch (\Exception $e) {
-              appWatch($record, "setActive()" . $e->getMessage(),get_class($this));
+              //appWatch($record, "setActive()" . $e->getMessage(),get_class($this));
+              $this->logger->addError(json_encode($record) , $e->getMessage());
               info("F", "cannot activate user");                //error message
           }
       }
@@ -219,7 +228,8 @@ class cRegistration extends fw\fwControlerSession{
       */
       public function sendConfirm($user){
           try {
-              appTrace(debug_backtrace(), $user);
+              //appTrace(debug_backtrace(), $user);
+              $this->logger->addDebug($user , debug_backtrace());
               
               if (empty($user)) throw new \Exception(get_class($this) . " unable to resetToken" );
               $user['status']=0;                        //status inactive
@@ -228,7 +238,8 @@ class cRegistration extends fw\fwControlerSession{
               $user['token']=$token;                    //new token
               $dateExpiry = date('Y-m-d H:i:s',strtotime("+10 minutes"));
               $user['tokenexpiry']=$dateExpiry;
-              appTrace(debug_backtrace(), $user);
+              //appTrace(debug_backtrace(), $user);
+              $this->logger->addinfo($user , $e->getMessage());
               if (!$this->saveData($user)) throw new \Exception(get_class($this) ." unable to record data");
       
               //send mail to the user
@@ -245,7 +256,8 @@ class cRegistration extends fw\fwControlerSession{
                */
               $this->redirect("root", "root");
           } catch (\Exception $e) {
-              appWatch($user, "resetToken()" . $e->getMessage(),get_class($this));
+              //appWatch($user, "resetToken()" . $e->getMessage(),get_class($this));
+              $this->logger->addError($user , $e->getMessage());
               info("F", "cannot reset token");                //error message
           }
       }

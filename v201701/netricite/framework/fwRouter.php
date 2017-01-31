@@ -38,7 +38,7 @@ const DEFAULT_ACTION = "site.action.index";
 //	action="index.php?application=blog&class=post&action=comment"
 //
 
-class fwRouter
+class fwRouter extends fwObject
 {
     // filename associated to the current view
     private $controlerPath;
@@ -49,8 +49,10 @@ class fwRouter
      */
     public function __construct()
     {
-        fwTrace(debug_backtrace());
+        parent::__construct();
+        //fwTrace(debug_backtrace());
         $this->controlerPath=fw\fwConfiguration::get("site.application.name") . "/" . fw\fwConfiguration::get("class.c") . "/";
+        $this->logger->addDebug($this->controlerPath, debug_backtrace());
     }
     
     
@@ -59,9 +61,12 @@ class fwRouter
      */
     public function routeRequest()
     {        
-        fwTrace(debug_backtrace(), array("SERVER_NAME"=>$_SERVER["SERVER_NAME"], 
+        $this->logger->addDebug(json_encode(array("SERVER_NAME"=>$_SERVER["SERVER_NAME"], 
             "ip client"=>$_SERVER["REMOTE_ADDR"],
-            "QUERY_STRING"=>$_SERVER["QUERY_STRING"]));
+            "QUERY_STRING"=>$_SERVER["QUERY_STRING"])), debug_backtrace());
+        //fwTrace(debug_backtrace(), array("SERVER_NAME"=>$_SERVER["SERVER_NAME"], 
+        //    "ip client"=>$_SERVER["REMOTE_ADDR"],
+        //    "QUERY_STRING"=>$_SERVER["QUERY_STRING"]));
         // url parameter format : index.php?application=blog&action=post&id=1
         try {
             /*
@@ -99,8 +104,8 @@ class fwRouter
         } else {
             $application = fw\fwConfiguration::get(INITIAL_APPLICATION);   // default application dev.ini  
         }
-        fwWatch(array(
-            'createControler(application)') , $application, get_class($this));
+        //fwWatch(array('createControler(application)') , $application, get_class($this));
+        $this->logger->addInfo($application);
         // for namespace compatibility
         $class = $this->getClass($request);
         
@@ -123,8 +128,8 @@ class fwRouter
             /*
              * new controler instance
              */
-            fwWatch(array('createControler(application)' => $application,
-                'namespace' => $namespace), "", get_class($this));
+            //fwWatch(array('createControler(application)' => $application,'namespace' => $namespace), "", get_class($this));
+            $this->logger->addInfo(json_encode(array('createControler(application)' => $application,'namespace' => $namespace)));
             $controler = new $namespace($application);
             $controler->setRequest($request);
             return $controler; // Return object controler
@@ -150,9 +155,8 @@ class fwRouter
             $class = fw\fwConfiguration::get(INITIAL_APPLICATION);   // default class = application from dev.ini
         }
         
-        fwWatch(array(
-            'getClass(class)' => $class),"",get_class($this)
-        ); // debug
+        //fwWatch(array('getClass(class)' => $class),"",get_class($this)); // debug
+        $this->logger->addInfo($class);
         return $class;
     }
     
@@ -171,14 +175,12 @@ class fwRouter
             $action = $request->getParameter('action');       
         } else {
             $action = fw\fwConfiguration::get(DEFAULT_ACTION);   // default action from dev.ini
-            fwWatch(array(
-                'getAction(action)' => "DEFAULT_ACTION"),"",get_class($this)
-            );
+            //fwWatch(array('getAction(action)' => "DEFAULT_ACTION"),"",get_class($this));
+            $this->logger->addInfo("DEFAULT_ACTION");
         }
         
-        fwWatch(array(
-            'getAction(action)' => $action),"",get_class($this)
-        ); // debug
+        //fwWatch(array('getAction(action)' => $action),"",get_class($this) ); // debug
+        $this->logger->addInfo($action);
         return $action;
     }
     

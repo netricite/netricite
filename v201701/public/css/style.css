@@ -25,6 +25,7 @@ smacss method
    - un parent (body) en "height: 100%";
    - le parent de body également en "height: 100%". */
 
+/*Partial URLs are interpreted relative to the source of the style sheet, not relative to the document */
 */
 
 /* structure des propriétés dans un sélecteur (séparer les groupes de propriétés par une ligne blanche) :
@@ -457,34 +458,16 @@ vous passez à côté de la plaque ! */
 
 /* SORTABLE ******************/
 .sortable { 
-	width: 200px; 
-}
-#sortable { 
-	list-style: none; 
-}
-
-#sortable li { 
-	list-style: none; 
-}
-
-/*Partial URLs are interpreted relative to the source of the style sheet, not relative to the document */
-#sortable li span.sortable {
-	margin:15px;
-	cursor: move;
-}
-
-#sortable__index { 
 	list-style: none; 
 	text-align: left; 
 	margin-left:-30px;
 }
-#sortable__index li { 
+.sortable li { 
 	border: 1px solid #999999;
 	border-radius: 5px;
 }
 
-/*Partial URLs are interpreted relative to the source of the style sheet, not relative to the document */
-#sortable__index li span.sortable__index {
+.sortable li span {
 	height:25px;
 	cursor: move;
 }

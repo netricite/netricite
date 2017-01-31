@@ -2,11 +2,13 @@
 use Netricite\Framework as fw;
 
 $rootpath = realpath(__DIR__ . '/../..') ."/";
-error_log("fwIndex.php - root path: " . $rootpath);
+error_log("fwBootstrap.php - initial base directory : " . $rootpath);
+
+require $rootpath. 'vendor/autoload.php';
 /*
  * application constants
  */
-error_log("*********** fwIndex.php **************************");
+error_log("*********** fwBootstrap.php **************************");
 
 // Report all errors
 error_reporting(E_ALL);
@@ -27,7 +29,7 @@ error_log("inifile:" . $inifile);
  * load Debug and Helpers
  */
 $rootpath = realpath(__DIR__) ;
-error_log("fwIndex.php - root path: " . $rootpath);
+error_log("fwBootstrap.php - base directory : " . $rootpath);
 require $rootpath."/fwConfiguration.php";
 require $rootpath.'/fwDebug.php';
 require $rootpath.'/fwHelpers.php';
@@ -56,6 +58,7 @@ $GLOBALS["site.imgsrc"] = $config->get("site.download.path");
 $GLOBALS["site.download.path"] = $_SERVER['DOCUMENT_ROOT'] . $config->get("site.download.path");
 $GLOBALS["site.fpdf.path"] = $_SERVER['DOCUMENT_ROOT'] . $config->get("site.fpdf.path");
 $GLOBALS["site.report.path"] = $GLOBALS["application.root.path"] . $config->get("site.report.path");
+$GLOBALS["site.logs.path"] = $GLOBALS['application.path'] . $config->get("site.logs.path");
 const ERROR_PAGE = "Error";
 try {
 /*
@@ -70,6 +73,7 @@ spl_autoload_register('classAutoLoader');
  */
 startTrace();
 
+/*
 watch($GLOBALS["web.base"],"GLOBALS.web.base");
 watch($GLOBALS["application.path"],"GLOBALS.application.path");
 watch($GLOBALS["application.root.path"],"GLOBALS.application.root.path");
@@ -77,8 +81,8 @@ watch($GLOBALS["application.imgsrc"],"GLOBALS.application.imgsrc");
 watch($GLOBALS["site.download.path"],"GLOBALS.site.download.path");
 watch($GLOBALS["site.report.path"],"GLOBALS.site.report.path");
 watch($GLOBALS["site.imgsrc"],"GLOBALS.site.imgsrc");
-
-error_log("============ fwIndex.php completed with success =============================");
+*/
+watch("============ fwBootstrap.php completed with success =============================");
 
 } catch (\Exception $e) {
     throw new \Exception($e->getMessage());

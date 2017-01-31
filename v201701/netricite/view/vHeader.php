@@ -7,17 +7,17 @@
 			 
 	<div class="pull-right">
 	
-	<div id="returnCode">
-    	<?php if (isset($errorMessage)): ?>
-			<?= $errorMessage ?>
-		<?php endif; ?>
-		<?php if (isset($_SESSION['info']) && $_SESSION['info']!=""){  				           
-          	    echo $_SESSION['info'] ;
-          	}  ?>
-      </div>
-      <div id="info">
-    	
-      </div>
+    	<div id="returnCode">
+        	<?php if (isset($errorMessage)): ?>
+    			<?= $errorMessage ?>
+    		<?php endif; ?>
+    		<?php if (isset($_SESSION['info']) && $_SESSION['info']!=""){  				           
+              	    echo $_SESSION['info'] ;
+              	}  ?>
+        </div>
+        <div id="info"></div>
+        
+        
 	</div>
 </Header>
 

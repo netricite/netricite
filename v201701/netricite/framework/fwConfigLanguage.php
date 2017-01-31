@@ -12,7 +12,7 @@ use Netricite\Framework as fw;
  * DEV and PROD constants are definied in index.php
  * 
  */
-class fwConfigLanguage
+class fwConfigLanguage 
 {
     /**
      * list of configuration parameters
@@ -24,6 +24,7 @@ class fwConfigLanguage
      */
     public function __construct($params)
     {
+        parent::__construct();
         fwTrace(debug_backtrace(), $params);
         self::$config=$params;
     }
@@ -57,6 +58,7 @@ class fwConfigLanguage
     {
         if (empty(self::$config)) {
             fwTrace(debug_backtrace());
+
             if (empty($langfile)) {
                 $path=fw\fwConfiguration::get('site.language.path');     //"public/language/";
                 $langfile= file_exists($langfile) ? $langfile : $path . $_SESSION['lang']. ".ini";
@@ -71,6 +73,7 @@ class fwConfigLanguage
                 self::$config = parse_ini_file($langfile);                  //get config
             }
             fwWatch(self::$config, $langfile, get_class());
+
         }
         return self::$config;
     }

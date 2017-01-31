@@ -34,7 +34,7 @@ use Netricite\Framework as fw;
                         echo "<td><div>" . str_pad($order['id'], 8, '0', STR_PAD_LEFT) . "</div></td>";
                         $date = strtotime($order['date_created']);
                         echo "<td><div>" . date('d/m/Y h:m:s', $date) . "</div></td>";
-                        echo "<td><div>" . number_format($order['amount'],2,',',' '). "</div></td>";
+                        echo "<td><div>" . number_format($order['netamount'],2,',',' '). "</div></td>";
                         echo "<td><div>" . $userdata['firstname'] ." ". $userdata['lastname'] . "</div></td>";
                         echo "<td><div>" . $order['reference']. "</div></td>"; 
                     echo "</tr>"; 

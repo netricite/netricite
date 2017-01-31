@@ -19,7 +19,7 @@ class cSlider extends fw\fwControlerSession {
    * constructor
    */
   public function __construct() {
-  	appTrace(debug_backtrace());
+  	parent::__construct();
 
     $this->model = new slider\mSlider();
   }

@@ -6,6 +6,7 @@
 +Author : [jpguilleron@hotmail.com]
 +
 +## Version
++	201701   2017 jan 22 Cart, invoice and payment altapay + paypal
 +	2016-14  2016 dec 31 Form validator generalization
 +	2016-13  2016 dec 7  Change thema/style to cope with bootstrap features and naming. use bootstrap design instead of custom design.
 +	2016-12  2016 dec 1  new TODO application, review Login, Blog, Chat, About, Slider application, add a test application with its own style
@@ -14,19 +15,19 @@
 +## Description
 +
 +* MVC architure framework
-+* Blog application version 0.1.0
-+* Chat application version 0.1.0
-+* Login application version 0.1.0
-+* Shop application version 0.1.0
-+* Todo application version 0.1.0
-+* Contact application version 0.0.1
++* Blog application version 2017
++* Chat application version 2017
++* Login application version 2017
++* Shop application version 2017 
++* Todo application version 2017
++* Contact application version 2017
 
 +## Configuration setup
 +
 +modify dev.ini to cope with the actual configuration - create a prod.ini for production (prod.ini override dev.ini)
 + config file *.ini:
 [Configuration]
-site.application.version = v2016-13			// VERSION to be updated for each version
+site.application.version = v201701			// VERSION to be updated for each version
 site.application.name = netricite			// Application name to be updated for each project
 site.application.index = root       		// default page launched 
 

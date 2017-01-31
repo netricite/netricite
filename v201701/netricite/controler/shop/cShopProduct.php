@@ -16,7 +16,7 @@ class cShopProduct extends fw\fwControlerSession {
    * constructor
    */
   public function __construct() {
-  	trace(debug_backtrace());  
+  	parent::__construct();  
     $this->model = new shop\mShopProduct();
   }
 

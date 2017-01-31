@@ -17,7 +17,7 @@ class cAccount extends fw\fwControlerFilter {
    * constructor
    */
   public function __construct() {
-  	appTrace(debug_backtrace()); 
+  	parent::__construct(); 
     $this->model = new login\mUser();
     $this->mOrder = new shop\mOrder();
   }

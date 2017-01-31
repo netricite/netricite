@@ -1,29 +1,52 @@
-<?php require_once("netricite/view/vViewInit.php"); ?>   
-<a class="pull-right" href="index.php?application=root&class=root#myPage">Acceuil</a>
+<?php require_once("netricite/view/vViewInit.php"); ?>
+<a class="pull-right"
+	href="index.php?application=root&class=root#myPage">Acceuil</a>
 
-<?php $this->title = "test" ;
+<?php
+
+$this->title = "test";
 use Netricite\Framework as fw;
 use Netricite\Payment as payment;
 
-$this->formgen = new fw\fwFormGen();
-
-echo $this->formgen->formbegin(array("name"=>"formPayment","col"=>"12","legend"=>"Effectuer le paiment"),
-    array("application"=>"test","class"=>"test"),
-    array());
-//echo '<form name="formPayment" action="index.php?application=test&class=test" method="post" >';
-echo $this->formgen->hiddenNodata("action", "payment");
-//echo '<button id="save" type="submit" name="save">Payment</button>';
-echo $this->formgen->button(array("field"=>"payment", "col"=>"3","icon"=>"credit-card","text"=>"Continue to secure payment", "tooltip"=>"Altapay secure payment"));
-
-echo '<form id="PensioPaymentForm" >';
-echo "All content in here will be replaced by the actual payment form";
-echo "</form>";
-
-if (!empty($_POST)) {
-    appWatch($_POST,"response from altapay","vTest");
-    
-} 
-
 ?>
+<section class="container">
+	<div class="row">
+		<ul id="sortable" class="sortable">
+			<div class="col-xs-2 col-sm-2">
+				<li><span class="fa fa-heart"></span>Item 1</li>
+			</div>
+			<div class="col-xs-2 col-sm-2">
+				<li><span class="fa fa-heart"></span>Item 2</li>
+			</div>
+			<div class="col-xs-2 col-sm-2">
+				<li><span class="fa fa-heart"></span>Item 3</li>
+			</div>
+			<div class="col-xs-2 col-sm-2">
+				<li><span class="fa fa-heart"></span>Item 4</li>
+			</div>
+			<div class="col-xs-2 col-sm-2">
+				<li><span class="fa fa-heart"></span>Item 5</li>
+			</div>
+			<div class="col-xs-2 col-sm-2">
+				<li><span class="fa fa-heart"></span>Item 6</li>
+			</div>
+			<div class="col-xs-2 col-sm-2">
+				<li><span class="fa fa-heart"></span>Item 7</li>
+			</div>
+		</ul>
+		<div>
+			<aside class="panel">
+				<h3 class="text-center">pour nous trouver aux Gets</h3>
+				<p>Rue du centre, en face de la patinoire(place limonaire), au
+					centre du Village des Gets</p>
+				<div id="googleMap"></div>
 
- 
+			</aside>
+
+</section>
+<p id="jsLoaded">DOM not yet loaded</p>
+
+
+
+
+

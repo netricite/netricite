@@ -17,15 +17,14 @@ class cTest extends fw\fwControlerSession {         //session tpe : without logi
    * constructor
    */
   public function __construct() {
-  	trace(debug_backtrace());  
+  	parent::__construct(); 
   }
 
   /**
    * refresh TEST page
    */
   public function test() {
-      appTrace(debug_backtrace());
-     
+      $this->logger->addDebug(".test", debug_backtrace());
       //send mail
       // Send the message to the user
       $token="notoken";
@@ -49,8 +48,8 @@ class cTest extends fw\fwControlerSession {         //session tpe : without logi
    * Booking
    */
   public function booking() {
-      appTrace(debug_backtrace());
-
+      $this->logger->addDebug(".booking", debug_backtrace());
+        
       //ADD a TODO TASK
       $data=array("title"=>"Réservation fondue",
           "milestone"=>date('Y-m-d H:i:s'),
@@ -72,7 +71,7 @@ class cTest extends fw\fwControlerSession {         //session tpe : without logi
     * upload file
     */
    public function upload() {
-       appTrace(debug_backtrace());
+       $this->logger->addDebug(".upload", debug_backtrace());
        if (empty($_FILES)) throw new \Exception("no selected file");
        //$target_dir = "D:/wamp/www/download/img/";
        
@@ -85,14 +84,14 @@ class cTest extends fw\fwControlerSession {         //session tpe : without logi
    }
    
    public function captcha() {
-       appTrace(debug_backtrace(), $_POST);
+       $this->logger->addDebug(json_encode($_POST), debug_backtrace());
        if(isset($_POST["g-recaptcha-response"])) {
        
            $data = array ('secret' => $GLOBALS['google.secretkey.recaptcha'],
                'response' => $_POST["g-recaptcha-response"],
                'remoteip'=>$_SERVER['REMOTE_ADDR']
            );
-           appWatch($data,"g-recaptcha-verify",get_class($this));
+           
            $data = http_build_query($data);            //return http_build_query($data, '', '&');
        
            $context_options = array (
@@ -103,11 +102,11 @@ class cTest extends fw\fwControlerSession {         //session tpe : without logi
                    'content' => $data
                )
            );
-           appWatch($data,"g-recaptcha-request",get_class($this));
+           
            $context = stream_context_create($context_options);
            $response=json_decode( file_get_contents(fw\fwConfiguration::get('google.recaptcha.verify'), false, $context), true );
 
-           appTrace(debug_backtrace(),$response);
+           
            if( !empty($response)  && $response["success"] ) {
                //processing registration
                echo '<h2>sucess full captcha</h2>';

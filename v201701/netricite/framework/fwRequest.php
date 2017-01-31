@@ -11,7 +11,7 @@ use Netricite\Framework as fw;
  * @version 2016-1
  *
  */
-class fwRequest
+class fwRequest extends fwObject
 {
     /*
      * manage parameters of the http url parameters
@@ -29,8 +29,9 @@ class fwRequest
      */
     public function __construct($parameters)
     {
-        fwTrace(debug_backtrace(), $parameters);
-        
+        parent::__construct();
+        //fwTrace(debug_backtrace(), $parameters);
+        $this->logger->addDebug("Parameters: " .json_encode($parameters), debug_backtrace());
         $this->parameters = $parameters;
         $this->session = new fw\fwSession();  
     }
@@ -55,10 +56,12 @@ class fwRequest
     public function getParameter($parameter)
     {
         if ($this->isParameter($parameter)) {
-            fwWatch(array("getParameter(parameter)"=>$parameter), "" , get_class($this));
+            //fwWatch(array("getParameter(parameter)"=>$parameter), "" , get_class($this));
+            $this->logger->addInfo($parameter);
             return $this->parameters[$parameter];
         } else
-            fwWatch($this->parameters, "url parameter '$parameter' missing in the request parameters", get_class($this));
+            //fwWatch($this->parameters, "url parameter '$parameter' missing in the request parameters", get_class($this));
+            $this->logger->addInfo("",$this->parameters);
             return "";
     }
     
@@ -70,18 +73,22 @@ class fwRequest
      */
      public function setParameter($parameter, $value='')
     {
-        fwWatch($this->parameters, "getParameter(parameters)", get_class($this));
-        fwWatch($parameter, "getParameter(parameter)", get_class($this));
+        //fwWatch($this->parameters, "getParameter(parameters)", get_class($this));
+        //fwWatch($parameter, "getParameter(parameter)", get_class($this));
+        $this->logger->addInfo($parameter,$this->parameters);
         if (empty($value)) {
-            fwWatch(array("unset(parameter)"=>$parameter), "" , get_class($this));
+            //fwWatch(array("unset(parameter)"=>$parameter), "" , get_class($this));
+            $this->logger->addInfo("unset parameter");
             unset($this->parameters[$parameter]);
             return;
         }
         if (!empty($this->parameters[$parameter])) {
-            fwWatch(array("setParameter(parameter)"=>$parameter), $value , get_class($this));
+            //fwWatch(array("setParameter(parameter)"=>$parameter), $value , get_class($this));
+            $this->logger->addInfo("set parameter" . $value);
             $this->parameters[$parameter]=$value;
         } else
-            fwWatch($this->parameters, "url parameter '$parameter' missing in the url request parameters", get_class($this));
+            //fwWatch($this->parameters, "url parameter '$parameter' missing in the url request parameters", get_class($this));
+            $this->logger->addInfo("unknown parameter");
     }
     public function getParameters()
     {

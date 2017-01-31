@@ -20,7 +20,7 @@ class cPost extends fw\fwControlerSession {
    * constructor
    */
   public function __construct() {
-  	appTrace(debug_backtrace());  
+  	parent::__construct();
   	$this->model = new blog\mPost();
     $this->blog = new blog\mBlog();
   }
@@ -35,9 +35,9 @@ class cPost extends fw\fwControlerSession {
    * @see \Netricite\Framework\fwControler::index()
    */
   public function index() {
-  	appTrace(debug_backtrace());
+  	$this->logger->addDebug("index", debug_backtrace());
   	if (!empty($this->request->getParameter("blogid"))) {
-	    $this->generateView(getAppData());
+	    $this->generateView($this->getAppData());
 	} else {
   	    $this->redirect("blog","blog");
   	}
@@ -63,7 +63,8 @@ class cPost extends fw\fwControlerSession {
    * @see \Netricite\Framework\fwControler::save()
    */
   public function save() {
-      appTrace(debug_backtrace(), $this->request->parameters);
+      //appTrace(debug_backtrace(), $this->request->parameters);
+      $this->logger->addDebug(json_encode($this->request->parameters), debug_backtrace());
       $rc = parent::saveData($_POST['data']);
       $this->redirect("blog","post", "blogid=" . $_POST['data']['blogid']  );                                          //refresh page
      

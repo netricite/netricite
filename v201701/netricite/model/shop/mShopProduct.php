@@ -16,7 +16,7 @@ class mShopProduct extends fw\fwDao {
      */
     public function __construct()
     {
-        appTrace(debug_backtrace());
+        parent::__construct();
         $this->table = "product";
     }
 }

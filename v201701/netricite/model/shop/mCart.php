@@ -16,15 +16,18 @@ class mCart extends fw\fwDao {
      */
     public function __construct()
     {
-        appTrace(debug_backtrace());
+        parent::__construct();
         $this->table = "product";
     }
     
     // items in cart
     public function getRecords(){
-        appTrace(debug_backtrace(),$_SESSION['cart']);
+        //appTrace(debug_backtrace(),$_SESSION['cart']);
+        $this->logger->addDebug("getRecords", debug_backtrace());
+        $this->logger->addInfo("cart",$_SESSION['cart']);
+        
         $ids = array_keys($_SESSION['cart']);
-        watch($ids, "mCart.getRecords(id)");
+        $this->logger->addInfo("mCart.getRecords(id)", $ids);
         if(empty($ids)){
             $records = array();
         }else{
@@ -33,6 +36,7 @@ class mCart extends fw\fwDao {
                 "conditions" => $conditions
             ));
         }
+        $this->logger->addInfo("data", $records);
         return $records;
     }
 }

@@ -1,4 +1,5 @@
 /* Google auth management */
+//unused? see@vTemplate 
 
 function handleClientLoad() {
 	// Loads the client library and the auth2 library together for efficiency.
@@ -64,10 +65,10 @@ function makeApiCall() {
 	// Make an API call to the People API, and print the user's given name.
 	googleUser=gapi.auth2.getAuthInstance().currentUser.get();
 	var profile = googleUser.getBasicProfile();
-	console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-	console.log('Name: ' + profile.getName());
-	console.log('Image URL: ' + profile.getImageUrl());
-	console.log('Email: ' + profile.getEmail());
+	//console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+	//console.log('Name: ' + profile.getName());
+	//console.log('Image URL: ' + profile.getImageUrl());
+	//console.log('Email: ' + profile.getEmail());
 
 	$.ajax({
 		url: 'netricite/async/asyncGoogleLogin.php',

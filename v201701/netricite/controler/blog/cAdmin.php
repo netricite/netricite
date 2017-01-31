@@ -14,9 +14,8 @@ class cAdmin extends fw\fwControlerFilter
     /**
      * Constructor 
      */
-    public function __construct(){
-		trace(debug_backtrace()); 								
-				
+    public function __construct(){							
+        parent::__construct();
         $this->model = new blog\mBlog();
         $this->comment = new blog\mComment();
     }

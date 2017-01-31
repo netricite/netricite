@@ -19,7 +19,7 @@ class cTodo extends fw\fwControlerFilter {                 //User must be loggin
    * constructor
    */
   public function __construct() {
-  	appTrace(debug_backtrace());
+  	parent::__construct();
     $this->model = new todo\mTodo();
   }
 
@@ -47,7 +47,7 @@ class cTodo extends fw\fwControlerFilter {                 //User must be loggin
    */
   public function updateDelete()
   {
-      appTrace(debug_backtrace());
+      $this->logger->addDebug("updateDelete", debug_backtrace());
       
       if ($_POST["operation"]=="save") {       
           $this->model->save($_POST['data']);

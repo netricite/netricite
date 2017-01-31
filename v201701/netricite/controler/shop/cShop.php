@@ -18,7 +18,7 @@ class cShop extends fw\fwControlerSession {
    * constructor
    */
   public function __construct() {
-  	appTrace(debug_backtrace()); 
+  	parent::__construct(); 
     $this->model = new shop\mShop();
   }
 
@@ -27,8 +27,8 @@ class cShop extends fw\fwControlerSession {
    * Booking
    */
   public function booking() {
-      appTrace(debug_backtrace()); 
-      
+      //appTrace(debug_backtrace()); 
+      $this->logger->addDebug(".booking", debug_backtrace());
       $device="";
       //var_dump($_POST);
       //var_dump($this->request->getParameters());

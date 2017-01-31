@@ -19,7 +19,7 @@ class cChat extends fw\fwControlerFilter
      */
     public function __construct()
     {
-        appTrace(debug_backtrace());
+        parent::__construct();
         $this->model = new chat\mChat();
     }
 
@@ -39,7 +39,8 @@ class cChat extends fw\fwControlerFilter
      */
     public function publish()
     {
-        appTrace(debug_backtrace());
+        //appTrace(debug_backtrace());
+        $this->logger->addDebug("sendMail",debug_backtrace());        
         if(!empty($_POST['data'])){
             sendMail($_POST['data']['message']);
             return $this->save();

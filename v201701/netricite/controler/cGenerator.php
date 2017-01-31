@@ -10,8 +10,8 @@ use Netricite\Model\@Application as @application;
  *
  * Application controler
  */
-class c@Application extends fw\fwControlerSession {         //session tpe : without login
-class c@Application extends fw\fwControlerFilter {          //session tpe : login required
+class c@Application extends fw\fwControlerSession {         //session type : without login
+class c@Application extends fw\fwControlerFilter {          //session type : login required
 
   private $class;
 
@@ -19,7 +19,7 @@ class c@Application extends fw\fwControlerFilter {          //session tpe : logi
    * constructor
    */
   public function __construct() {
-  	appTrace(debug_backtrace());
+  	parent::__construct();
     $this->model = new @application\m@Application();
   }
 }

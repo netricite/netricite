@@ -1,0 +1,11 @@
+dev.ini
+.project
+.buildpath
+.htaccess
+.settings/*.*
+public/cache/*.*
+public/file/*.*
+public/log/*.*
+public/tool/*.*
+
+

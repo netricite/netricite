@@ -3,6 +3,7 @@ namespace  Netricite\Controler\Root;
 
 use Netricite\Framework as fw;
 use Netricite\Model\Blog as blog;
+use Netricite\Framework\fwObject;
 
 /**
  * @author jp
@@ -16,9 +17,8 @@ class cRoot extends fw\fwControlerSession {         //session tpe : without logi
    * constructor
    */
   public function __construct() {
-  	appTrace(debug_backtrace()); 
-	
   	$this->model = new blog\mComment();
+  	parent::__construct();
   }
 
   /**
@@ -35,7 +35,8 @@ class cRoot extends fw\fwControlerSession {         //session tpe : without logi
      * add a comment in the blog "Livre d'or - le traineau"
      */
   public function comment() {
-   appTrace(debug_backtrace());
+   //appTrace(debug_backtrace());
+   $this->logger->addDebug('comment' , debug_backtrace());
    $model->save($_POST['data']);                   
    //REFRESH PAGE
    $this->refreshPage();

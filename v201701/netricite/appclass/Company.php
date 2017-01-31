@@ -9,7 +9,7 @@ use Netricite\Framework as fw;
  * company information is located in config.ini
  */
 
-class company  {
+class Company  extends appObject {
     
     private $info;
     /*
@@ -29,7 +29,7 @@ class company  {
      * constructor
      */
     public function __construct(){
-        appTrace(debug_backtrace());
+        parent::__construct();
     }
     
     public function get($param){

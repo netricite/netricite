@@ -17,7 +17,7 @@ use Netricite\Model\Login as login;
      * constructor
      */
     public function __construct(){		
-        appTrace(debug_backtrace());
+        parent::__construct();
         $this->model = new login\mUser();
     }
     
@@ -26,7 +26,8 @@ use Netricite\Model\Login as login;
      * @throws fw\fwException
      */
     public function login(){
-		appTrace(debug_backtrace());
+		//appTrace(debug_backtrace());
+        $this->logger->addDebug(json_encode($_POST['data']), debug_backtrace());
 		unset($_POST['action']);
 		if (!isset($_POST['data']['pseudo'])) throw new \Exception(get_class($this) . "Invalid pseudo");
 		if (!empty($this->getRecord($_POST['data']['pseudo'], "pseudo"))) {
@@ -41,6 +42,7 @@ use Netricite\Model\Login as login;
 		            //get the user
 		            $user = $this->model->login($login, $pwd);
 		            appWatch($user, "cLogin.login(record)",get_class($this));
+		            $this->logger->addInfo($user);
 		            if (!empty($user)) {
 		                //set url
 		                $_SESSION["userid"]=$user[0]['id'];
@@ -53,6 +55,8 @@ use Netricite\Model\Login as login;
 		        
 		                appWatch(array("cLogin.login(nextApplication)"=>$nextApplication,
 		                    "cLogin.login(nextClass)"=>$nextClass), "login.save(next)",get_class($this));
+		                $this->logger->addInfo("login", array("nextApplication"=>$nextApplication,
+		                    "nextClass"=>$nextClass));
 		                /*
 		                 * redirect to action requested by the user before login
 		                 */
@@ -71,7 +75,8 @@ use Netricite\Model\Login as login;
      * manage logout action
      */
     public function logout(){
-		appTrace(debug_backtrace());								
+		//appTrace(debug_backtrace());			
+        $this->logger->addDebug("logout", debug_backtrace());
         $this->request->getSession()->destroy();
 		//redirect to home page
         $this->home();
@@ -94,7 +99,8 @@ use Netricite\Model\Login as login;
      */
     public function sendConfirm($user){
         try {
-            appTrace(debug_backtrace(), $user);
+            //appTrace(debug_backtrace(), $user);
+            $this->logger->addDebug($user, debug_backtrace());
             unset($_POST['reset']);
             if (empty($user)) throw new \Exception(get_class($this) . " unable to reset password" );
             
@@ -112,7 +118,8 @@ use Netricite\Model\Login as login;
             $user['pwd']=$tokenPwd;                   //new password
             $dateExpiry = date('Y-m-d H:i:s',strtotime("+10 minutes"));
             $user['tokenexpiry']=$dateExpiry;
-            appTrace(debug_backtrace(), $user);
+            //appTrace(debug_backtrace(), $user);
+            $this->logger->addInfo($user);
             if (!$this->saveData($user)) throw new \Exception(get_class($this) ." unable to record data");
     
             //send mail to the user
@@ -131,7 +138,8 @@ use Netricite\Model\Login as login;
              */
             $this->redirect("root", "root");
         } catch (\Exception $e) {
-            appWatch($user, "sendConfirm()" . $e->getMessage(),get_class($this));
+            //appWatch($user, "sendConfirm()" . $e->getMessage(),get_class($this));
+            $this->logger->addError("sendConfirm.cannot reset password: " .$user, $e->getMessage());
             info("F", "cannot reset password");                //error message
         }
     }
@@ -142,7 +150,8 @@ use Netricite\Model\Login as login;
      */
     public function confirm(){
         try {
-            appTrace(debug_backtrace(), $this->request->parameters);
+            //appTrace(debug_backtrace(), $this->request->parameters);
+            $this->logger->addDebug(json_encode($this->request->parameters), debug_backtrace());
             if (empty($this->request->parameters)) throw new \Exception(get_class($this) . " invalid callback confirm" );
             $conditions="token='" .$this->request->getParameter('token'). "' AND tokenExpiry > NOW()";
             if (empty($this->get(array("conditions"=>$conditions)))) throw new \Exception(get_class($this) ." unable to get valid token");
@@ -152,7 +161,8 @@ use Netricite\Model\Login as login;
              */
             $this->redirect("root", "root");
         } catch (\Exception $e) {
-            appWatch($this->request->parameters, "confirm(url.paramaters)" . $e->getMessage(),get_class($this));
+            //appWatch($this->request->parameters, "confirm(url.paramaters)" . $e->getMessage(),get_class($this));
+            $this->logger->addError("confirm.invalid token" , $e->getMessage());
             info("F", "invalid token, operation aborted please reset");  //error message
             redirectError();
         }
@@ -173,7 +183,8 @@ use Netricite\Model\Login as login;
      */
     public function setActive($record){
         try {
-          appTrace(debug_backtrace(), $record);
+          //appTrace(debug_backtrace(), $record);
+          $this->logger->addDebug(json_encode($record), debug_backtrace());
           if (empty($record)) throw new \Exception(get_class($this) . " unable to change status" );
           $id=$record['id'];
           $email=$record['email'];
@@ -194,7 +205,8 @@ use Netricite\Model\Login as login;
           info("I", "password reset done");
     
         } catch (\Exception $e) {
-            appWatch($this->record, "setActive()" . $e->getMessage(),get_class($this));
+            //appWatch($this->record, "setActive()" . $e->getMessage(),get_class($this));
+            $this->logger->addInfo("exception", $e->getMessage());
             info("F", "cannot activate user");                //error message
         }
     }
